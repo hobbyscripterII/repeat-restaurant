@@ -33,8 +33,8 @@ public class NaverMapApiController {
 
         HttpClient httpClient = HttpClientBuilder.create().build();
         HttpGet httpGet = new HttpGet(url);
-        httpGet.addHeader("X-Naver-Client-Id", clientId);
-        httpGet.addHeader("X-Naver-Client-Secret", clientSecret);
+        httpGet.addHeader("X-NCP-APIGW-API-KEY-ID", clientId);
+        httpGet.addHeader("X-NCP-APIGW-API-KEY", clientSecret);
 
         try {
             HttpResponse httpResponse = httpClient.execute(httpGet);
