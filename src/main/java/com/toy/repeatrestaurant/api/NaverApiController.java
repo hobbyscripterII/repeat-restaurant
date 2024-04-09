@@ -1,5 +1,7 @@
 package com.toy.repeatrestaurant.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.toy.repeatrestaurant.api.model.NaverCoordinateGetDto;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -15,19 +17,17 @@ import java.io.InputStreamReader;
 
 @Slf4j
 @Controller
-public class NaverMapApiController {
+public class NaverApiController {
     // application.yaml에 있는 네이버 지도 api 애플리케이션 id와 secret key
     @Value("${api.naver.map.client-id}") private String clientId;
     @Value("${api.naver.map.client-secret}") private String clientSecret;
 
     @GetMapping("/naver/map")
     @ResponseBody
-    public String naverMap(String addr) {
-        log.info("addr = {}", addr);
-        log.info("clientId = {}", clientId);
-        log.info("clientSecret = {}", clientSecret);
-
+    public NaverCoordinateGetDto naverMap(String addr) {
         StringBuilder stringBuilder = new StringBuilder(); // 가변 문자열을 처리하기 위한 StringBuilder 객체 생성
+        NaverCoordinateGetDto naverCoordinateGetDto = new NaverCoordinateGetDto();
+
         // url - geocoding api 호출 시 사용되는 url
         // addr - html에서 ajax로 받아오는 클라이언트 측에서 입력한 텍스트 형식의 주소
         String url = "https://naveropenapi.apigw.ntruss.com/map-geocode/v2/geocode-js?query=" + addr;
@@ -43,22 +43,26 @@ public class NaverMapApiController {
         try {
             // get 요청
             HttpResponse httpResponse = httpClient.execute(httpGet);
+
             // response 데이터 읽기
             InputStreamReader inputStreamReader = new InputStreamReader(httpResponse.getEntity().getContent(), "UTF-8");
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
+            // bufferedReader의 값을 다 읽을 때 까지 while문 실행
             String current = "";
 
-            // bufferedReader의 값을 다 읽을 때 까지 while문 실행
             while ((current = bufferedReader.readLine()) != null) { // 1. bufferedReader에 있는 값이 current에 대입된다.
                 stringBuilder.append(current); // 2. bufferedReader의 값이 담긴 current를 stringBuilder에 추가한다.
-                log.info("stringBuilder = {}", stringBuilder);
             }
-            // bufferedReader에 있는 문자열을 다 읽으면 닫아준다.
-            bufferedReader.close();
+
+            // json to dto 작업
+            ObjectMapper objectMapper = new ObjectMapper();
+            naverCoordinateGetDto = objectMapper.readValue(stringBuilder.toString(), NaverCoordinateGetDto.class);
+
+            bufferedReader.close(); // bufferedReader에 있는 문자열을 다 읽으면 닫아준다.
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return stringBuilder.toString();
+        return naverCoordinateGetDto;
     }
 }
