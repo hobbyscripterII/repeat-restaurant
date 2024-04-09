@@ -22,9 +22,7 @@ repositories {
 }
 
 dependencies {
-    // https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient
     implementation group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.14'
-
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.2.2'
     implementation 'org.springframework.boot:spring-boot-starter-jdbc'
     implementation 'org.springframework.boot:spring-boot-starter-web'
