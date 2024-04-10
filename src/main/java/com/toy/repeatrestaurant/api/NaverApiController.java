@@ -1,7 +1,7 @@
 package com.toy.repeatrestaurant.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.toy.repeatrestaurant.api.model.NaverCoordinateGetDto;
+import com.toy.repeatrestaurant.api.model.NaverCoordinateGetVo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,9 +24,9 @@ public class NaverApiController {
 
     @GetMapping("/naver/map")
     @ResponseBody
-    public NaverCoordinateGetDto naverMap(String addr) {
+    public NaverCoordinateGetVo naverMap(String addr) {
         StringBuilder stringBuilder = new StringBuilder(); // 가변 문자열을 처리하기 위한 StringBuilder 객체 생성
-        NaverCoordinateGetDto naverCoordinateGetDto = new NaverCoordinateGetDto();
+        NaverCoordinateGetVo naverCoordinateGetVo = new NaverCoordinateGetVo();
 
         // url - geocoding api 호출 시 사용되는 url
         // addr - html에서 ajax로 받아오는 클라이언트 측에서 입력한 텍스트 형식의 주소
@@ -55,14 +55,14 @@ public class NaverApiController {
                 stringBuilder.append(current); // 2. bufferedReader의 값이 담긴 current를 stringBuilder에 추가한다.
             }
 
-            // json to dto 작업
-            ObjectMapper objectMapper = new ObjectMapper();
-            naverCoordinateGetDto = objectMapper.readValue(stringBuilder.toString(), NaverCoordinateGetDto.class);
+            // json to vo 작업
+            ObjectMapper objectMapper = new ObjectMapper(); // json을 java 객체로 변환하기 위해 ObjectMapper 객체 생성
+            naverCoordinateGetVo = objectMapper.readValue(stringBuilder.toString(), NaverCoordinateGetVo.class); // 역직렬화
 
             bufferedReader.close(); // bufferedReader에 있는 문자열을 다 읽으면 닫아준다.
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return naverCoordinateGetDto;
+        return naverCoordinateGetVo;
     }
 }

@@ -30,7 +30,7 @@
                         console.log('data = ', data);
                         const addr = data.addresses[0];
                         const divAddrConsole = document.getElementById('div-addr-console');
-                        divAddrConsole.innerHTML = `<p>주소: <span id="addr">${addr.roadAddress}</span></p><p>x: <span id="x">${addr.x}</span></p><p>y: <span id="y">${addr.y}</span></p>`;
+                        divAddrConsole.innerHTML = `<p>도로명 주소: <span id="addr">${addr.roadAddress}</span></p><p>지번 주소: <span id="addr">${addr.jibunAddress}</span></p><p>x: <span id="x">${addr.x}</span></p><p>y: <span id="y">${addr.y}</span></p>`;
                     },
                     error: (x, e) => { console.log(x); console.log(e); }
                 })

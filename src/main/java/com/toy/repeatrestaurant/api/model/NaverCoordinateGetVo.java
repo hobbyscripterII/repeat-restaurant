@@ -6,8 +6,8 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-@JsonIgnoreProperties(ignoreUnknown = true)
-public class NaverCoordinateGetDto {
+@JsonIgnoreProperties(ignoreUnknown = true) // json에 없는 프로퍼티 무시
+public class NaverCoordinateGetVo {
     private String status;
     private List<Addresses> addresses;
     private String errorMessage;
@@ -16,6 +16,7 @@ public class NaverCoordinateGetDto {
     @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Addresses {
         private String roadAddress;
+        private String jibunAddress;
         private String x;
         private String y;
     }
