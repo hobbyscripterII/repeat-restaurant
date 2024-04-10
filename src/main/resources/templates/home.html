@@ -15,8 +15,8 @@
 <div id="container"><div id="map"></div><div id="side"><input type="text" id="input-addr" placeholder="주소를 입력해주세요."><input type="button" id="btn-coordinate" value="좌표 얻기"><div id="div-addr-console"></div></div></div>
 
 <script>
-    var mapOptions = { center: new naver.maps.LatLng(37.3595704, 127.105399), zoom: 10 };
-    var map = new naver.maps.Map('map', mapOptions);
+    var mapOptions = { center: new naver.maps.LatLng(37.3595704, 127.105399), zoom: 10, zoomControl: true }; // 지도 로드 시 초기 값 세팅
+    var map = new naver.maps.Map('map', mapOptions); // 해당 좌표 축으로 지도 표시
 
     document.addEventListener('click', (e) => {
         if(e.target.id == 'btn-coordinate') {
@@ -27,10 +27,13 @@
                 $.ajax({
                     type: 'get', url: '/naver/map', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
                     success: (data) => {
-                        console.log('data = ', data);
                         const addr = data.addresses[0];
                         const divAddrConsole = document.getElementById('div-addr-console');
                         divAddrConsole.innerHTML = `<p>도로명 주소: <span id="addr">${addr.roadAddress}</span></p><p>지번 주소: <span id="addr">${addr.jibunAddress}</span></p><p>x: <span id="x">${addr.x}</span></p><p>y: <span id="y">${addr.y}</span></p>`;
+
+                        // 마커 표시
+                        var map = new naver.maps.Map('map', { center: new naver.maps.LatLng(addr.y, addr.x), zoom: 19, zoomControl: true });
+                        var marker = new naver.maps.Marker({ position: new naver.maps.LatLng(addr.y, addr.x), map: map });
                     },
                     error: (x, e) => { console.log(x); console.log(e); }
                 })
