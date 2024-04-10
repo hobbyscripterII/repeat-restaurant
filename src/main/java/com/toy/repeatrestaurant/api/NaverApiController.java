@@ -37,7 +37,6 @@ public class NaverApiController {
         // url - geocoding api 호출 시 사용되는 url
         // addr - html에서 ajax로 받아오는 클라이언트 측에서 입력한 텍스트 형식의 주소
         String url = "https://openapi.naver.com/v1/search/local.json?query=" + addr + "&display=10&start=1&sort=sim";
-        log.info("url = {}", url);
 
         // HttpClient - http와 통신하기 위한 객체
         HttpClient httpClient = HttpClientBuilder.create().build();
