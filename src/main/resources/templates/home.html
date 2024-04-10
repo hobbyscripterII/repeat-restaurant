@@ -22,10 +22,48 @@
         if(e.target.id == 'btn-coordinate') {
             const addr = document.getElementById('input-addr').value;
 
-            if(!addr) { alert('주소를 입력해주세요.'); }
+            if(!addr) { alert('주소명을 입력해주세요.'); } // search 사용 시에는 업체명으로 변경
             else {
+                // $.ajax({
+                //     type: 'get', url: '/naver/search', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
+                //     success: (data) => {
+                //         const items = data.items;
+                //         const divAddrConsole = document.getElementById('div-addr-console');
+                //
+                //         items.forEach((i) => {
+                //             console.log(i);
+                //             const newDiv = document.createElement('div');
+                //             newDiv.classList.add('div-restaurant-info');
+                //             const newP = document.createElement('p');
+                //             const title = document.createTextNode(`업체명: ${i.title}`);
+                //             newP.append(title);
+                //             const newP2 = document.createElement('p');
+                //             const category = document.createTextNode(`업체 카테고리명: ${i.category}`);
+                //             newP2.append(category);
+                //             const newP3 = document.createElement('p');
+                //             const address = document.createTextNode(`업체 주소: ${i.address}`);
+                //             newP3.append(address);
+                //             newDiv.append(newP);
+                //             newDiv.append(newP2);
+                //             newDiv.append(newP3);
+                //             divAddrConsole.append(newDiv);
+                //
+                //             var tm128 = new naver.maps.Point(i.mapx, i.mapy);
+                //             var latLng = new naver.maps.TransCoord.fromTM128ToLatLng(tm128);
+                //             console.log(`latLng = ${latLng}`);
+                //
+                //             var map = new naver.maps.Map('map', { center: latLng, zoom: 19, zoomControl: true });
+                //             var marker = new naver.maps.Marker({ position: latLng, map: map });
+                //         });
+                //
+                //         // divAddrConsole.innerHTML = `<p>도로명 주소: <span id="addr">${addr.roadAddress}</span></p><p>지번 주소: <span id="addr">${addr.jibunAddress}</span></p><p>x: <span id="x">${addr.x}</span></p><p>y: <span id="y">${addr.y}</span></p>`;
+                //
+                //     },
+                //     error: (x, e) => { console.log(x); console.log(e); }
+                // })
+
                 $.ajax({
-                    type: 'get', url: '/naver/map', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
+                    type: 'get', url: '/naver/maps', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
                     success: (data) => {
                         const addr = data.addresses[0];
                         const divAddrConsole = document.getElementById('div-addr-console');
@@ -34,6 +72,15 @@
                         // 마커 표시
                         var map = new naver.maps.Map('map', { center: new naver.maps.LatLng(addr.y, addr.x), zoom: 19, zoomControl: true });
                         var marker = new naver.maps.Marker({ position: new naver.maps.LatLng(addr.y, addr.x), map: map });
+
+                        // 정보창 표시
+                        var contentString = [`<div class="iw_inner"><p>${addr.jibunAddress}</p><p><a href="https://search.naver.com/search.naver?query=${addr.jibunAddress}" target="_blank">해당 주소 네이버로 검색하기</a></p></div>`].join('');
+                        var infowindow = new naver.maps.InfoWindow({ content: contentString });
+                        naver.maps.Event.addListener(marker, "click", (e) => {
+                            if (infowindow.getMap()) { infowindow.close(); }
+                            else { infowindow.open(map, marker); }
+                        });
+                        infowindow.open(map, marker);
                     },
                     error: (x, e) => { console.log(x); console.log(e); }
                 })
