@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <title>또간집 맛집 지도</title>
     <link href="/common.css" rel="stylesheet">
-    <script src="/common.js"></script>
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jcn2x4ikv"></script>
     <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jcn2x4ikv&submodules=geocoder"></script>
+    <script src="/common.js"></script>
 </head>
 
 <body>
@@ -19,15 +19,6 @@
     var map = new naver.maps.Map('map', mapOptions); // 해당 좌표 축으로 지도 표시
 
     document.addEventListener('click', (e) => {
-        if (e.target.className == 'div-restaurant-info') {
-            const target = e.target;
-            const el = document.querySelector(`.${target.className}`);
-            const addr = el.dataset.addr;
-            console.log(`addr = ${addr}`);
-
-            // findCoordinate(addr);
-        }
-
         if(e.target.id == 'btn-coordinate') {
             const addr = document.getElementById('input-addr').value;
 
@@ -36,13 +27,13 @@
                 $.ajax({
                     type: 'get', url: '/naver/search', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
                     success: (data) => {
-                        const items = data.items;
-                        const divAddrConsole = document.getElementById('div-addr-console');
+                        const items = data.items, divAddrConsole = document.getElementById('div-addr-console');
 
                         items.forEach((i) => {
                             const newDiv = document.createElement('div');
                             newDiv.classList.add('div-restaurant-info');
                             newDiv.setAttribute('data-addr', `${i.address}`);
+                            newDiv.setAttribute('onclick', `findCoordinate(this)`);
                             const newP = document.createElement('p');
                             const title_ = i.title.replace('<b>', '');
                             const title = title_.replace('</b>', ' ');
@@ -62,22 +53,19 @@
                     },
                     error: (x, e) => { console.log(x); console.log(e); }
                 })
-
-
             }
         }
     });
 
-    function findCoordinate(addr) {
+    function findCoordinate(item) {
+        const addr = item.dataset.addr;
+
         $.ajax({
             type: 'get', url: '/naver/maps', data: {'addr': encodeURIComponent(addr)}, dataType: 'json',
             success: (data) => {
                 const addr = data.addresses[0];
                 const divAddrConsole = document.getElementById('div-addr-console');
                 // divAddrConsole.innerHTML = `<p>도로명 주소: <span id="addr">${addr.roadAddress}</span></p><p>지번 주소: <span id="addr">${addr.jibunAddress}</span></p><p>x: <span id="x">${addr.x}</span></p><p>y: <span id="y">${addr.y}</span></p>`;
-
-                console.log(`addr.y = ${addr.y}`);
-                console.log(`addr.x = ${addr.x}`);
 
                 // 마커 표시
                 var map = new naver.maps.Map('map', { center: new naver.maps.LatLng(addr.y, addr.x), zoom: 19, zoomControl: true });
