@@ -4,14 +4,20 @@
     <meta charset="UTF-8">
     <title>또간집 맛집 지도</title>
     <link href="/common.css" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/bootswatch@5.3.3/dist/zephyr/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
 <div id="title"><span class="title-decoration">또</span><span class="title-decoration">간</span><span class="title-decoration">집</span>맛집 지도</div>
-<div id="container"><div id="map"></div><div id="side"><input type="text" id="input-addr" placeholder="주소를 입력해주세요."><input type="button" id="btn-coordinate" value="좌표 얻기"><div id="div-addr-console"></div></div></div>
+<div id="container"><div id="map"></div><div id="side">
+    <div id="div-input-wrap">
+        <input type="text" id="input-addr" class="form-control" placeholder="맛집 이름을 입력해주세요.">
+        <input type="button" id="btn-coordinate" class="btn btn-success" value="맛집 검색하기">
+    </div>
+    <div id="div-addr-console" class="form-control"></div></div></div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jcn2x4ikv"></script>
 <script type="text/javascript" src="https://oapi.map.naver.com/openapi/v3/maps.js?ncpClientId=0jcn2x4ikv&submodules=geocoder"></script>
 <script src="/common.js"></script>

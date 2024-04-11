@@ -15,6 +15,7 @@ document.addEventListener('click', (e) => {
                     items.forEach((i) => {
                         const newDiv = document.createElement('div');
                         newDiv.classList.add('div-restaurant-info');
+                        newDiv.classList.add('form-control');
                         newDiv.setAttribute('data-addr', `${i.address}`);
                         newDiv.setAttribute('onclick', `findCoordinate(this)`);
                         const newP = document.createElement('p');
