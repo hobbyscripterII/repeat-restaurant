@@ -26,10 +26,9 @@ function insertRestaurant(item) {
     const newP4 = document.createElement('p');
     const yTextNode = document.createTextNode('위도(y축): ' + item.dataset.y);
     newP4.append(yTextNode);
-    divInsertRestaurant.append(newP);
-    divInsertRestaurant.append(newP2);
-    divInsertRestaurant.append(newP3);
-    divInsertRestaurant.append(newP4);
+    const newDiv = document.createElement('div');
+    newDiv.innerHTML = '<select class="form-select"><option value="null">카테고리 선택</option><option value="1">한식</option><option value="2">중식</option><option value="4">양식</option><option value="5">일식</option><option value="6">기타</option></select>';
+    divInsertRestaurant.append(newP, newP2, newP3, newP4, newDiv);
 }
 
 document.addEventListener('click', (e) => {
@@ -65,9 +64,7 @@ document.addEventListener('click', (e) => {
                         const newP3 = document.createElement('p');
                         const addressNode = document.createTextNode(`주소: ${i.address}`);
                         newP3.append(addressNode);
-                        newDiv.append(newP);
-                        newDiv.append(newP2);
-                        newDiv.append(newP3);
+                        newDiv.append(newP, newP2, newP3);
                         divAddrConsole.append(newDiv);
                     });
                 },
