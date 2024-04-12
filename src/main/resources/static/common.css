@@ -26,3 +26,6 @@ body { width: 100%; height: 100%; margin: 0px; text-align: center; }
 #div-input-wrap { display: flex; box-sizing: border-box; }
 #input-addr { width: 80%; }
 #btn-coordinate { width: 20%; margin-left: 10px; }
+.btn-insert-restaurant { margin-bottom: 20px; }
+.iw_inner { padding-top: 20px; }
+#input-restaurant-name { margin: 0px 5px 0px 5px; width: 400px; }

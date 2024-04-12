@@ -8,13 +8,18 @@
 </head>
 
 <body>
-<div id="title"><span class="title-decoration">또</span><span class="title-decoration">간</span><span class="title-decoration">집</span>맛집 지도</div>
-<div id="container"><div id="map"></div><div id="side">
-    <div id="div-input-wrap">
-        <input type="text" id="input-addr" class="form-control" placeholder="맛집 이름을 입력해주세요.">
-        <input type="button" id="btn-coordinate" class="btn btn-success" value="맛집 검색하기">
+<div class="modal" id="modal-insert-restaurant">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header"><h5 class="modal-title">업체 등록</h5><button type="button" class="btn-close modal-close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button></div>
+            <div class="modal-body div-insert-restaurant"></div>
+            <div class="modal-footer"><button type="button" class="btn btn-primary">저장</button><button type="button" class="btn btn-secondary modal-close" data-bs-dismiss="modal">닫기</button></div>
+        </div>
     </div>
-    <div id="div-addr-console" class="form-control"></div></div></div>
+</div>
+
+<div id="title"><span class="title-decoration">또</span><span class="title-decoration">간</span><span class="title-decoration">집</span>맛집 지도</div>
+<div id="container"><div id="map"></div><div id="side"><div id="div-input-wrap"><input type="text" id="input-addr" class="form-control" placeholder="맛집 이름을 입력해주세요."><input type="button" id="btn-coordinate" class="btn btn-success" value="맛집 검색하기"></div><div id="div-addr-console" class="form-control"></div></div></div>
 
 <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>

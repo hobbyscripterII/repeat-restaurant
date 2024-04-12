@@ -27,34 +27,6 @@ public class NaverApiController {
     @Value("${api.naver.search.client-id}") private String searchClientId;
     @Value("${api.naver.search.client-secret}") private String searchClientSecret;
 
-    @GetMapping("/maps")
-    @ResponseBody
-    public NaverCoordinateGetVo naverMapsApi(String addr) {
-        NaverCoordinateGetVo naverCoordinateGetVo = new NaverCoordinateGetVo();
-        try {
-            StringBuilder stringBuilder = getApiData(addr, "maps");
-            ObjectMapper objectMapper = new ObjectMapper();
-            naverCoordinateGetVo = objectMapper.readValue(stringBuilder.toString(), NaverCoordinateGetVo.class);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return naverCoordinateGetVo;
-    }
-
-    @GetMapping("/search")
-    @ResponseBody
-    public NaverSearchGetVo naverSearchApi(String addr) {
-        NaverSearchGetVo naverSearchGetVo = new NaverSearchGetVo();
-        try {
-            StringBuilder stringBuilder = getApiData(addr, "search");
-            ObjectMapper objectMapper = new ObjectMapper(); // json을 java 객체로 변환하기 위해 ObjectMapper 객체 생성
-            naverSearchGetVo = objectMapper.readValue(stringBuilder.toString(), NaverSearchGetVo.class); // 역직렬화
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return naverSearchGetVo;
-    }
-
     private StringBuilder getApiData(String addr, String apiName) {
         StringBuilder stringBuilder = new StringBuilder(); // 가변 문자열을 처리하기 위한 StringBuilder 객체 생성
         String clientId = null; String clientSecret = null;
@@ -98,5 +70,33 @@ public class NaverApiController {
             e.printStackTrace();
         }
         return stringBuilder;
+    }
+
+    @GetMapping("/search")
+    @ResponseBody
+    public NaverSearchGetVo naverSearchApi(String addr) {
+        NaverSearchGetVo naverSearchGetVo = new NaverSearchGetVo();
+        try {
+            StringBuilder stringBuilder = getApiData(addr, "search");
+            ObjectMapper objectMapper = new ObjectMapper(); // json을 java 객체로 변환하기 위해 ObjectMapper 객체 생성
+            naverSearchGetVo = objectMapper.readValue(stringBuilder.toString(), NaverSearchGetVo.class); // 역직렬화
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return naverSearchGetVo;
+    }
+
+    @GetMapping("/maps")
+    @ResponseBody
+    public NaverCoordinateGetVo naverMapsApi(String addr) {
+        NaverCoordinateGetVo naverCoordinateGetVo = new NaverCoordinateGetVo();
+        try {
+            StringBuilder stringBuilder = getApiData(addr, "maps");
+            ObjectMapper objectMapper = new ObjectMapper();
+            naverCoordinateGetVo = objectMapper.readValue(stringBuilder.toString(), NaverCoordinateGetVo.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return naverCoordinateGetVo;
     }
 }
