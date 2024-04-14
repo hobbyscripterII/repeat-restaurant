@@ -8,6 +8,8 @@ function insertRestaurant(item) {
     modalOpen();
 
     const divInsertRestaurant = document.querySelector('.div-insert-restaurant');
+    divInsertRestaurant.innerHTML = ''; // 이전 노드 세팅 초기화
+    
     const newP = document.createElement('p');
     newP.style.display = 'flex';
     newP.style.lineHeight = '31px';
@@ -32,6 +34,12 @@ function insertRestaurant(item) {
 }
 
 document.addEventListener('click', (e) => {
+    if (e.target.id == 'btn-save-restaurant') {
+        $('.div-insert-restaurant > p').each((i, item) => {
+            console.log('item = ', item);
+        });
+    }
+
     if(e.target.className == 'btn-close modal-close' || e.target.className == 'btn btn-secondary modal-close') {
         modalClose();
     }
